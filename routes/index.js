@@ -10,24 +10,9 @@ passport.use(new GoogleStrategy({
 	callbackURL: "http://social-arqatek.com:3000/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
-	console.log("afas");
 	return done(null, profile);
 }
 ));
-
-
-/* GET home page. */
-router.get('/', function(req, res, next) {
-	console.log(req.user);
-	res.render('Login/login', {});
-});
-
-router.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login'] }));
-
-router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {
-	console.log(req.user);
-	res.redirect('/');
-});
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -35,6 +20,36 @@ passport.serializeUser(function(user, done) {
 
 passport.deserializeUser(function(user, done) {
   done(null, user);
+});
+
+router.get('/', function(req, res, next) {
+	if (req.user && req.user.emails[0].value.indexOf("@arqatek.com") != -1) {
+		res.redirect('/app');	
+	}
+
+	res.render('Login/login', {});
+});
+
+router.get('/app', function(req, res, next) {
+	console.log(req.user);
+	res.render('App/home', {});
+});
+
+router.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }));
+
+router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {
+	console.log(req.user.emails[0].value);
+	
+	if (req.user.emails[0].value.indexOf("@arqatek.com") == -1) {
+		res.redirect('/logout');	
+	}
+
+	res.redirect('/');
+});
+
+router.get('/logout', function(req, res){
+  req.logout();
+  res.redirect('/');
 });
 
 module.exports = router;

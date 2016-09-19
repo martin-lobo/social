@@ -11,8 +11,7 @@ passport.use(new GoogleStrategy({
 },
 function(accessToken, refreshToken, profile, done) {
 	return done(null, profile);
-}
-));
+}));
 
 passport.serializeUser(function(user, done) {
   done(null, user);
@@ -23,28 +22,29 @@ passport.deserializeUser(function(user, done) {
 });
 
 router.get('/', function(req, res, next) {
-	if (req.user && req.user.emails[0].value.indexOf("@arqatek.com") != -1) {
+	if (req.user && req.user.emails && req.user.emails[0].value.indexOf("@arqatek.com") != -1) {
 		res.redirect('/app');	
+	} else {
+		res.render('Login/login', {});
 	}
-
-	res.render('Login/login', {});
 });
 
 router.get('/app', function(req, res, next) {
-	console.log(req.user);
-	res.render('App/home', {});
+	if (!req.user) {
+		res.redirect('/');	
+	} else {
+		res.render('App/home', {});
+	}
 });
 
 router.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }));
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {
-	console.log(req.user.emails[0].value);
-	
 	if (req.user.emails[0].value.indexOf("@arqatek.com") == -1) {
 		res.redirect('/logout');	
+	} else {
+		res.redirect('/app');
 	}
-
-	res.redirect('/');
 });
 
 router.get('/logout', function(req, res){

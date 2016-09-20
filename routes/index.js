@@ -50,8 +50,9 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
 });
 
 router.get('/logout', function(req, res){
-  req.logout();
-  res.redirect('/');
+  req.session.destroy(function (err) {
+    res.redirect('/'); 
+  });
 });
 
 module.exports = router;

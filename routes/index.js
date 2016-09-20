@@ -4,10 +4,12 @@ var passport = require('passport');
 var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 var config = require('../config/google.js');
 
+var host = (config.env !== 'dev') ? "http://arqatek-social.herokuapp.com" : "http://social-arqatek.com:3000";
+
 passport.use(new GoogleStrategy({
 	clientID: config.googleClientId,
 	clientSecret: config.googleClientSecret,
-	callbackURL: "http://social-arqatek.com:3000/auth/google/callback"
+	callbackURL: host + "/auth/google/callback"
 },
 function(accessToken, refreshToken, profile, done) {
 	return done(null, profile);

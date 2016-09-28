@@ -12,8 +12,8 @@ var lint = require('gulp-eslint');
 
 var config = {
 	paths: {
-		mainJs: 'app/main.js',
-		js: ['app/**/*.js'],
+		mainJs: 'app/main.jsx',
+		js: ['app/**/*.jsx'],
 		jsOut: 'public/static/js/'
 	}
 };

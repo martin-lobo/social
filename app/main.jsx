@@ -2,6 +2,17 @@
 
 var React = require('react');
 var ReactDOM = require('react-dom');
-var Toolbar = require('./components/Toolbar.jsx');
+var ReactRouter = require('react-router');
 
-ReactDOM.render(<Toolbar />, document.getElementById("app"));
+
+var Toolbar = require('./components/Toolbar.jsx');
+var App = require('./app.jsx');
+
+
+ReactDOM.render(
+	<ReactRouter.Router history={ReactRouter.browserHistory}>
+    	<ReactRouter.Route path="/" component={App}>
+    		<ReactRouter.Route path="app" component={Toolbar}/>
+    	</ReactRouter.Route>
+    </ReactRouter.Router>
+, document.getElementById('app'));

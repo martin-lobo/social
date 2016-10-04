@@ -41,6 +41,14 @@ router.get('/app', function(req, res, next) {
 	}
 });
 
+router.get('/salas', function(req, res, next) {
+	if (!req.user) {
+		res.redirect('/');	
+	} else {
+		res.render('App/home', {});
+	}
+});
+
 router.get('/auth/google', passport.authenticate('google', { scope: ['https://www.googleapis.com/auth/plus.login', 'https://www.googleapis.com/auth/plus.profile.emails.read'] }));
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {

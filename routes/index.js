@@ -27,7 +27,7 @@ passport.deserializeUser(function(user, done) {
 
 router.get('/', function(req, res, next) {
 	if (req.user && req.user.emails && req.user.emails[0].value.indexOf("@arqatek.com") != -1) {
-		res.redirect('/app');	
+		res.redirect('/app');
 	} else {
 		res.render('Login/login', {});
 	}
@@ -35,15 +35,15 @@ router.get('/', function(req, res, next) {
 
 router.get('/app', function(req, res, next) {
 	if (!req.user) {
-		res.redirect('/');	
+		res.redirect('/');
 	} else {
 		res.render('App/home', {});
 	}
 });
 
-router.get('/salas', function(req, res, next) {
+router.get('/app/suggestions', function(req, res, next) {
 	if (!req.user) {
-		res.redirect('/');	
+		res.redirect('/');
 	} else {
 		res.render('App/home', {});
 	}
@@ -53,11 +53,11 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['https://ww
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {
 	if (req.user.emails[0].value.indexOf("@arqatek.com") == -1) {
-		res.redirect('/logout');	
+		res.redirect('/logout');
 	}
 
 	var googleId = req.user.id;
-	
+
 	User.find({ 'googleId': googleId }, function(err, user) {
 		var newUser;
 		if (err) throw err;
@@ -75,13 +75,13 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
 		} else {
 			res.redirect('/app');
 		}
-	});	
-	
+	});
+
 });
 
 router.get('/logout', function(req, res){
 	req.session.destroy(function (err) {
-		res.redirect('/'); 
+		res.redirect('/');
 	});
 });
 

@@ -13,7 +13,6 @@ var NewSuggestionsPage = React.createClass({
           dataType: 'json',
           cache: false,
           success: function(data) {
-           componentHandler.upgradeDom();
             this.setState({author: data.name});
           }.bind(this),
           error: function(xhr, status, err) {

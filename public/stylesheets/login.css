@@ -12,6 +12,11 @@
 .login .btn-in {
 	margin-top: 360px;
 }
+.login .text-info {
+	margin-top: 10px;
+	color: #888;
+	font-size: 11px;
+}
 
 @media (max-width: 840px) {
 	.login .logo {

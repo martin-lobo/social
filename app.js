@@ -5,9 +5,13 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
-var session = require('express-session')
+var session = require('express-session');
+var mongoose   = require('mongoose');
+var config = require('./config/google.js');
 
 var routes = require('./routes/index');
+var api = require('./routes/api');
+var uristring = config.mongo_uri;
 
 var app = express();
 
@@ -26,7 +30,22 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api/', function (req, res, next) {
+  if (!req.user) res.send(403);
+  else next();
+});
+
 app.use('/', routes);
+app.use('/api', api);
+
+mongoose.Promise = global.Promise;
+mongoose.connect(uristring, function (err, res) {
+  if (err) {
+    console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+  } else {
+    console.log ('Succeeded connected to: ' + uristring);
+  }
+});
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -37,6 +37,6 @@ gulp.task('lint', function () {
 });
 
 gulp.task('watch', function () {
-	gulp.watch(config.paths.js, ['js', 'lint']);
+	gulp.watch(config.paths.js, ['js']);
 });
 

@@ -9,18 +9,25 @@ router.get('/', function(req, res, next) {
 
 router.post('/suggestions', function(req, res, next) {
 	
-	console.log(req.user);
+	console.log(req.body.suggestion);
+	if (!req.body.suggestion) res.send(500);
 	
-	var googleId = req.user.id;
 	
 	var suggestion = new Suggestion({
-		googleId: googleId,
-		author: "Kefala",
-		text: "Facha"
+		author: req.user.displayName,
+		text: req.body.suggestion,
+		created_at: new Date()
 	});
 
-	res.setHeader('Content-Type', 'application/json');
-	res.send(JSON.stringify({ a: 1 }, null, 3));
+	suggestion.save(function (err) {
+		if (err) {
+			console.log(err);
+			res.send(500);
+		} else {
+			res.setHeader('Content-Type', 'application/json');
+			res.send(JSON.stringify({}, null, 3));
+		}
+	});	
 });
 
 router.get('/suggestions', function(req, res, next) {

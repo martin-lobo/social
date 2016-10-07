@@ -3,6 +3,7 @@ var $ = require('jquery');
 var Router = require('react-router');
 var Link = Router.Link;
 
+
 var NewSuggestionsPage = React.createClass({
     displayName: 'NewSuggestionsPage',
 
@@ -12,6 +13,7 @@ var NewSuggestionsPage = React.createClass({
           dataType: 'json',
           cache: false,
           success: function(data) {
+           componentHandler.upgradeDom();
             this.setState({author: data.name});
           }.bind(this),
           error: function(xhr, status, err) {
@@ -27,10 +29,26 @@ var NewSuggestionsPage = React.createClass({
             snackbarContainer.MaterialSnackbar.showSnackbar(data);
             return;
         }
+        
         if (!this.state.loading) {
-            console.log(this.state.suggestion);
+            var suggestion = this.state.suggestion;
             this.setState({ loading: true });
+            $.ajax({
+              url: location.origin + "/api/suggestions",
+              dataType: 'json',
+              method: 'POST',
+              data: {'suggestion': suggestion},
+              cache: false,
+              success: function(data) {
+                this.setState({ loading: false });
+                location.pathname = "/app/suggestions";
 
+              }.bind(this),
+              error: function(xhr, status, err) {
+                this.setState({ loading: false });
+                console.error(location.origin + "/api", status, err.toString());
+              }.bind(this)
+            });
         }
     },
 
@@ -76,7 +94,7 @@ var NewSuggestionsPage = React.createClass({
                 <div className="mdl-cell mdl-cell--3-col"></div>
             </div>
             <div id="demo-toast-example" className="mdl-js-snackbar mdl-snackbar">
-              <div className="mdl-snackbar__text">Puta</div>
+              <div className="mdl-snackbar__text"></div>
               <button className="mdl-snackbar__action" type="button"></button>
             </div>
 		</div>

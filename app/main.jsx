@@ -5,7 +5,8 @@ var ReactDOM = require('react-dom');
 var ReactRouter = require('react-router');
 
 var Home = require('./Home/HomePage.jsx');
-var Salas = require('./Salas/SalasPage.jsx');
+var Suggestions = require('./Suggestions/SuggestionsPage.jsx');
+var NewSuggestion = require('./Suggestions/NewSuggestionPage.jsx');
 var App = require('./app.jsx');
 
 
@@ -13,7 +14,8 @@ ReactDOM.render(
 	<ReactRouter.Router history={ReactRouter.browserHistory}>
     	<ReactRouter.Route path="/" component={App}>
     		<ReactRouter.Route path="app" component={Home}/>
-    		<ReactRouter.Route path="salas" component={Salas}/>
+    		<ReactRouter.Route path="app/suggestions" component={Suggestions}/>
+    		<ReactRouter.Route path="app/suggestions/new" component={NewSuggestion}/>
     	</ReactRouter.Route>
     </ReactRouter.Router>
 , document.getElementById('app'));

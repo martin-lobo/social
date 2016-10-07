@@ -4,8 +4,8 @@ var HomePage = React.createClass({
     displayName: 'HomePage',
     render: function () {
         return (
-            <div>
-            	<h1>Facha</h1>
+            <div className="home">
+            	<i className="material-icons">favorite</i>
             </div>
         );
     }

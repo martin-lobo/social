@@ -1,0 +1,36 @@
+.mdl-card {
+	min-height: initial;
+}
+.mdl-textfield {
+	width: 100%;
+}
+
+.sidebar {}
+.sidebar .title {
+	border-bottom: 1px solid #ddd;
+}
+
+.empty-message {
+	color: #999;
+	font-size: 18px;
+	padding: 10px 20px;
+}
+
+.suggestion-list {}
+.suggestion-list .add-button {
+	position: fixed;
+    bottom: 20px;
+    right: 20px;
+}
+.suggestion-list .mdl-card {
+	margin: auto;
+}
+
+.home {
+    text-align: center;
+    padding-top: 300px;
+}
+.home i {
+	font-size: 100px;
+	color: #ffcb30;
+}

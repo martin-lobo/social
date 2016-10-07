@@ -8,11 +8,12 @@ var SideBar = React.createClass({
     displayName: 'SideBar',
     render: function () {
         return (
-            <div className="mdl-layout__drawer">
-                <span className="mdl-layout-title">Arqatek</span>
+            <div className="mdl-layout__drawer sidebar">
+                <span className="mdl-layout-title title">Arqatek</span>
                 <nav className="mdl-navigation">
-                    <Link className="mdl-navigation__link" to="/app">Tareas</Link>
-                    <Link className="mdl-navigation__link" to="/salas">Salas</Link>
+                    <Link className="mdl-navigation__link" to="/app">Inicio</Link>
+                    <Link className="mdl-navigation__link" to="/app/suggestions">Sugerencias</Link>
+                    <a className="mdl-navigation__link" href="/logout">Salir</a>
                 </nav>
             </div>
         )

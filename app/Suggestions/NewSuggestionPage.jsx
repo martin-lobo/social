@@ -8,6 +8,7 @@ var NewSuggestionsPage = React.createClass({
     displayName: 'NewSuggestionsPage',
 
     componentDidMount: function() {
+        componentHandler.upgradeDom();
         $.ajax({
           url: location.origin + "/api/user/name",
           dataType: 'json',

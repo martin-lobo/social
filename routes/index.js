@@ -62,14 +62,14 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['https://ww
 
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {
 	if (req.user.emails[0].value.indexOf("@arqatek.com") == -1) {
-		res.redirect('/logout');
+		res.send(500);
 	}
 
 	var googleId = req.user.id;
 
 	User.find({ 'googleId': googleId }, function(err, user) {
 		var newUser;
-		if (err) throw err;
+		if (err) res.send(500);
 		if (!user.length) {
 			newUser = new User({
 				'googleId': googleId,
@@ -77,7 +77,7 @@ router.get('/auth/google/callback', passport.authenticate('google', { failureRed
 			});
 
 			newUser.save(function(err) {
-				if (err) throw err;
+				if (err) res.send(500);
 				res.redirect('/app');
 				console.log('User saved successfully!');
 			});

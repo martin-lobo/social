@@ -63,6 +63,8 @@ router.get('/auth/google', passport.authenticate('google', { scope: ['https://ww
 router.get('/auth/google/callback', passport.authenticate('google', { failureRedirect: '/fail' }), function(req, res) {
 	if (req.user.emails[0].value.indexOf("@arqatek.com") == -1) {
 		res.send(500);
+		res.redirect('/logout');
+		return;
 	}
 
 	var googleId = req.user.id;
